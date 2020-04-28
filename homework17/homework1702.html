@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        .wrapper{
+            width: 40%;
+        }
+        p{
+            font-size: small;
+            color: gray;
+        }
+        .created{
+            background-color: white;
+        }
+        #forMistake{
+            color: red;
+            font-size: small;
+
+        }
+        
+        
+        
+    </style>
+</head>
+<body>
+   <div class="container bg-light dynamic"> 
+    <div class="text-center">
+        <h1>Favorite fruits</h1>
+        <hr>
+    </div> 
+    
+    <form class="wrapper container">  
+        <span>Please type your favorite fruit separeted by comma:</span>
+        <input type="text" class="form-control">
+        <p>you can type fruits only from this list:</p>
+        <p>apples, pears, oranges, pineapples, kiwis, bananas, barries, watermelons, lemons</p>
+        <span id="forMistake" class=""></span>
+        <button type="button" class="btn btn-medium btn-primary form-control" id="addButton">Add fruits</button>
+    </form>
+    <div class="forDynamic">
+
+    </div>
+   
+  </div> 
+    <script>
+        var addButton = document.querySelector("#addButton")
+        var input = document.querySelector("input")
+        var forDynamic = document.querySelector(".forDynamic")
+        var forMistake = document.querySelector("#forMistake")
+
+        var favFruits = ["apples",  "pears", "oranges", "pineapples", "kiwis", "bananas", "barries", "watermelons", "lemons"]
+        var enteredFruits = []
+        
+        addButton.addEventListener("click", addFruits)
+        function addFruits(){
+            enteredFruits = []
+            var enteredString = input.value.split(" ").join("");
+            enteredFruits = enteredString.split(",")
+
+         
+          for(var i=0; i<enteredFruits.length; i++){
+                if(favFruits.indexOf(enteredFruits[i]) === -1){
+                    input.classList.remove("is-valid")
+                    input.classList.add("is-invalid")
+                    forMistake.textContent = "we dont have " + enteredFruits + " in our list"  
+
+
+                
+                }
+                else{
+                    input.classList.remove("is-invalid")
+                    input.classList.add("is-valid")
+                    
+
+                    var div = document.createElement("div")
+                    var createdButton = document.createElement("button")
+                    var span = document.createElement("span")
+
+                    div.classList.add("created")
+                    div.classList.add("d-flex")
+                    div.classList.add("justify-content-between")
+                    div.classList.add("border")
+                    div.classList.add("p-2")
+                    div.classList.add("mt-2")
+
+                    createdButton.setAttribute("type", "button")
+                    createdButton.classList.add("btn")
+                    createdButton.classList.add("btn-danger")
+                    createdButton.classList.add("btn-sm")
+
+                    createdButton.textContent = "Delete"
+
+                    span.textContent = enteredFruits[i]
+
+                    forDynamic.appendChild(div)
+                    div.appendChild(span)
+                    div.appendChild(createdButton)
+
+                    createdButton.addEventListener("click" , deleteFruit)
+
+                    forMistake.textContent = ""
+
+                }
+                    
+            }
+            
+
+           
+
+            
+
+            function deleteFruit(){
+                var parentNode = this.parentNode
+                parentNode.remove()
+
+            } 
+        }
+         
+         
+        
+
+        
+
+
+    </script>
+</body>
+</html>
