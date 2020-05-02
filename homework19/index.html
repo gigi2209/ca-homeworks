@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+    <header class="">
+
+    </header>
+
+    <div class="container bg-light d-flex justify-content-around flex-xl-nowrap flex-wrap" id="mainDiv">
+    
+    </div>
+    
+    <script>
+        var container = document.querySelector("#mainDiv")
+        var header = document.querySelector("header")
+
+       
+
+
+
+
+    
+
+
+        var url = "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json"
+
+        var firstImgSrc = "moleculeMan.jpg"
+        var secondImgSrc = "madameUperrcut.jpg"
+        var thirImgSrc = "eternalFlame.jpg"
+        
+        fetch(url).then(function (response){
+            return response.json()
+        }).then(function (data){
+            makeCard(data.members[0], firstImgSrc, "p-2")
+            makeCard(data.members[1], secondImgSrc, "p-2")
+            makeCard(data.members[2], thirImgSrc, "p-2")
+            
+           
+
+        })
+
+        function makeCard(object, imgSrc, padding){
+            var mainCardDiv = document.createElement("div")
+            mainCardDiv.classList.add("m-5")
+            mainCardDiv.classList.add("card")
+            mainCardDiv.style.width = "18rem"
+            mainCardDiv.classList.add(padding)
+
+
+            var cardBodyDiv = document.createElement("div")
+            cardBodyDiv.classList.add("card-body")
+
+
+            var cardImage = document.createElement("img")
+            cardImage.setAttribute("src", imgSrc)
+            cardImage.classList.add("card-img-top")
+
+
+            var h5 = document.createElement("h5")
+            h5.classList.add("card-title")
+            h5.textContent=object.name
+
+            var progressDiv = document.createElement("div")
+            progressDiv.classList.add("progress")
+
+            var divInProgress = document.createElement("div")
+            divInProgress.classList.add("progress-bar")
+            divInProgress.classList.add("progress-bar-striped")
+            divInProgress.setAttribute("role", "progressbar")
+
+            var span = document.createElement("span")
+            span.textContent = "Strength:"
+            
+
+            container.appendChild(mainCardDiv)
+            mainCardDiv.appendChild(cardImage)
+
+            
+
+            mainCardDiv.appendChild(cardBodyDiv)
+            cardBodyDiv.appendChild(h5)
+
+            cardBodyDiv.appendChild(span)
+
+        
+
+            
+
+            if(object.powers.length === 1){
+                divInProgress.classList.add("bg-success")
+                divInProgress.style.width = "60%"
+                divInProgress.setAttribute("aria-valuenow", "10")
+                divInProgress.setAttribute("aria-valuemin", "0")
+                divInProgress.setAttribute("aria-valuemax", "100")
+                cardBodyDiv.appendChild(progressDiv)
+                progressDiv.appendChild(divInProgress)
+
+            }
+            else if(object.powers.length > 1 && object.powers.length < 5 ){
+                divInProgress.classList.add("bg-warning")
+                divInProgress.style.width = "80%"
+                divInProgress.setAttribute("aria-valuenow", "80")
+                divInProgress.setAttribute("aria-valuemin", "0")
+                divInProgress.setAttribute("aria-valuemax", "100")
+                cardBodyDiv.appendChild(progressDiv)
+                progressDiv.appendChild(divInProgress)
+
+            }
+            else{
+                divInProgress.classList.add("bg-danger")
+                divInProgress.style.width = "100%"
+                divInProgress.setAttribute("aria-valuenow", "100")
+                divInProgress.setAttribute("aria-valuemin", "0")
+                divInProgress.setAttribute("aria-valuemax", "100")
+                cardBodyDiv.appendChild(progressDiv)
+                progressDiv.appendChild(divInProgress)
+            }
+
+            var ageSpan = document.createElement("span")
+            ageSpan.textContent = "age: " + object.age
+            cardBodyDiv.appendChild(ageSpan)
+
+            var secretIdentitySpan = document.createElement("span")
+            secretIdentitySpan.style.display = "block"
+            secretIdentitySpan.textContent = "Secret identity: " + object.secretIdentity
+            cardBodyDiv.appendChild(secretIdentitySpan)
+
+            var powersh5 = document.createElement("h5")
+            powersh5.textContent = "Powers:"
+            powersh5.classList.add("mt-3")
+            cardBodyDiv.appendChild(powersh5)
+
+            var ul = document.createElement("ul")
+            ul.classList.add("list-group")
+            ul.classList.add("list-group-flush")
+            cardBodyDiv.appendChild(ul)
+            
+            for(var i=0; i<object.powers.length; i++){
+                var li = document.createElement("li")
+                li.classList.add("list-group-item")
+                li.textContent = object.powers[i]
+                ul.appendChild(li)
+
+                
+            }
+
+            var button = document.createElement("button")
+            button.classList.add("btn")
+            button.classList.add("btn-block")
+            button.classList.add("btn-outline-primary")
+            button.textContent = "Read more.."
+
+            cardBodyDiv.appendChild(button)
+
+
+                
+            
+
+
+
+
+
+            
+            
+
+            
+
+            
+
+            
+            
+
+
+
+        }
+
+      
+
+        
+
+
+    </script>
+</body>
+</html>
